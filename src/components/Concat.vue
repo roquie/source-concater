@@ -11,16 +11,32 @@
       :on-change="handleChange"
       multiple>
       <i class="el-icon-upload"></i>
-      <div class="el-upload__text">Drop file here or <em>click to start</em></div>
-      <div class="el-upload__tip" slot="tip">zip files with any size (this app using your browser RAM)</div>
+      <div class="el-upload__text">Drop file here or <em>click to start</em>, then process it will start automatically</div>
+      <div class="el-upload__tip" slot="tip">
+        zip files with any size (this app using your browser RAM)
+        <br> <br>
+        Warning! If file too big, it's ok if page content generating with a delay.
+      </div>
     </el-upload>
+    <el-row>
+      <el-col :xs="{span: 20, offset: 2}" :sm="{span: 12, offset: 6}" :md="{span: 10, offset: 7}" :lg="{span: 8, offset: 8}">
+        <p class="help-choosing">
+          Choose preset from whitelist (of extensions) to open and concatinating files here (click on tab)
+        </p>
+        <el-tabs type="card" @tab-click="handleTabClick">
+          <el-tab-pane :label="preset.title" v-for="preset in presets" :key="preset.title">
+            <tags :tags="preset.value" @change="handleTagsChanges" />
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+    </el-row>
     <div id="output">
       <div class="header" v-show="buttons">
         <el-button id="copy" type="primary" data-clipboard-target="#output .content">Copy to clipboard</el-button>
         <el-button @click="handleClear">Clear</el-button>
       </div>
       <div class="content">
-
+        <!-- content of files here -->
       </div>
     </div>
   </div>
@@ -31,29 +47,43 @@
 import JSZip from 'JSZip'
 import Clipboard from 'clipboard'
 import _ from 'lodash'
+import Tags from './Tags'
 
-const processFile = (file) => {
+const defaultExtensions = ['php', 'js', 'vue', 'htaccess', 'html']
+
+const processFile = (file, selectedExtensions) => {
   JSZip.loadAsync(file.raw)
   .then(function (zip) {
     zip.forEach(function (relativePath, zipEntry) {
-      if (!zipEntry.dir) {
-        zip.file(zipEntry.name).async('string').then(function (content) {
-          let ptag = document.createElement('pre')
-          ptag.innerHTML = `<strong>${zipEntry.name}</strong><br><br>${_.escape(content)}`
-          document
-            .querySelector('#output .content')
-            .appendChild(ptag)
-        })
+      if (!zipEntry.dir && !zipEntry.name.includes('__MACOSX')) {
+        const currentFileExtension = zipEntry.name.split('.').pop()
+        if (selectedExtensions.includes(currentFileExtension)) {
+          zip.file(zipEntry.name).async('string').then(function (content) {
+            let ptag = document.createElement('pre')
+            ptag.innerHTML = `<strong>${zipEntry.name}</strong><br><br>${_.escape(content)}`
+            document
+              .querySelector('#output .content')
+              .appendChild(ptag)
+          })
+        }
       }
     })
   })
 }
 
 export default {
-  name: 'concat',
   data () {
     return {
-      buttons: false
+      buttons: false,
+      presets: [
+        { title: 'PHP', value: defaultExtensions },
+        { title: 'JS', value: ['js', 'vue', 'jsx', 'html'] },
+        { title: 'Go', value: ['go'] },
+        { title: 'iOS', value: ['swift', 'c', 'h', 'storyboard'] },
+        { title: 'Android', value: ['java', 'kt', 'xml'] },
+        { title: 'Custom', value: [] }
+      ],
+      selectedExtensions: defaultExtensions
     }
   },
   created () {
@@ -67,36 +97,50 @@ export default {
     })
   },
   methods: {
-    handleChange: function (file, fileList) {
-      processFile(file)
+    handleChange (file, fileList) {
+      processFile(file, this.selectedExtensions)
       this.buttons = true
     },
-    handleCopy: function () {
-
-    },
-    handleClear: function () {
+    handleClear () {
       document
         .querySelector('#output .content')
         .innerHTML = ''
       this.buttons = false
+    },
+    handleTabClick (tab, event) {
+      const item = _.find(this.presets, o => o.title === tab.label)
+      this.selectedExtensions = item.value
+    },
+    handleTagsChanges (tags) {
+      this.selectedExtensions = tags
     }
+  },
+  components: {
+    Tags
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .upload-zip, .who-is-who {
+  * {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .el-row {
+    margin-top: -35px;
+  }
+
+  .upload-zip, .who-is-who, .help-choosing {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
   }
 
   .who-is-who {
-    font-size: 26px
+    font-size: 1.4em
   }
   .upload-zip {
     width: 360px;
