@@ -1,5 +1,8 @@
 # Source-concater
 
+[![Build Status](https://travis-ci.org/roquie/source-concater.svg?branch=master)](https://travis-ci.org/roquie/source-concater)
+[![BCH compliance](https://bettercodehub.com/edge/badge/roquie/source-concater?branch=master)](https://bettercodehub.com/)
+
 > Concat zipped sources to single file.
 
 ## Online
