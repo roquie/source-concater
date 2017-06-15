@@ -4,6 +4,7 @@
   "description": "Concat zipped sources to single file.",
   "author": "roquie <roquie0@gmail.com>",
   "private": false,
+  "license": "MIT",
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
