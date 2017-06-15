@@ -8,7 +8,7 @@ Concat zipped sources to single file.
 ## Docker
 
 ```bash
-docker run --name srcc -d -p 80:80 roquie/srcc:latest
+docker run --name srcc -d -p 80:80 roquie/source-concater:latest
 ```
 
 #### Build
