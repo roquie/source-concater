@@ -44,7 +44,7 @@
 
 <script>
 
-import JSZip from 'JSZip'
+import JSZip from 'jszip'
 import Clipboard from 'clipboard'
 import _ from 'lodash'
 import Tags from './Tags'
