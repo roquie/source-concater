@@ -13,7 +13,7 @@
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">Drop file here or <em>click to start</em>, then process it will start automatically</div>
       <div class="el-upload__tip" slot="tip">
-        zip files with any size (this app using your browser RAM)
+        zip files with any size (this app using your RAM)
         <br> <br>
         Warning! If file too big, it's ok if page content generating with a delay.
       </div>
