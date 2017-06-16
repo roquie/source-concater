@@ -6,7 +6,7 @@
 Concat zipped sources to single file.
 
 Try it -> [https://srcc.herokuapp.com/](https://srcc.herokuapp.com/)! <br>
-Or look it [how use it](https://raw.githubusercontent.com/roquie/source-concater/master/doc/how-usage.gif).
+Or look it [how use it](https://github.com/roquie/source-concater/blob/master/doc/how-usage.gif).
 
 ## Docker
 
