@@ -1,6 +1,7 @@
 # Source-concater
 
 [![Build Status](https://travis-ci.org/roquie/source-concater.svg?branch=master)](https://travis-ci.org/roquie/source-concater)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/roquie/source-concater/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/roquie/source-concater/?branch=master)
 [![BCH compliance](https://bettercodehub.com/edge/badge/roquie/source-concater?branch=master)](https://bettercodehub.com/)
 
 Concat zipped sources to single file.
