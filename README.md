@@ -23,7 +23,7 @@ docker run --name srcc -d -p 80:8080 roquie/source-concater:latest
 
 #### Run
 
-* `docker run --rm --name srcc -d -p 80:8080 srcc:latest`
+* `docker run --rm --name srcc -d -p 8001:8080 srcc:latest`
 * open [http://localhost:8001/](http://localhost:8001/)
 
 #### Stop
