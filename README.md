@@ -5,30 +5,28 @@
 
 Concat zipped sources to single file.
 
+Try it -> [https://srcc.herokuapp.com/](https://srcc.herokuapp.com/)!
+
 ## Docker
 
 ```bash
-docker run --name srcc -d -p 80:80 roquie/source-concater:latest
+docker run --name srcc -d -p 80:8080 roquie/source-concater:latest
 ```
 
 #### Build
 
 * `cd /path/to/project/root`
 * `yarn build`
-* `docker build -t srcc-image:v1 .`
+* `docker build -t srcc:latest .`
 
 #### Run
 
-* `docker run --name srcc -d -p 80:80 srcc-image:v1`
+* `docker run --rm --name srcc -d -p 80:8080 srcc:latest`
 * open [http://localhost:8001/](http://localhost:8001/)
 
 #### Stop
 
 * `docker stop srcc`
-
-## Online
-
-[https://roquie.github.io/source-concater/](https://roquie.github.io/source-concater/)
 
 ## Build Setup
 

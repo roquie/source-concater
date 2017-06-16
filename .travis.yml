@@ -20,6 +20,8 @@ script:
   - yarn build
 
 after_success:
-  - docker login -u $DOCKER_LOGIN -p $DOCKER_PASS
-  - docker build -t $TRAVIS_REPO_SLUG:latest .
-  - docker push $TRAVIS_REPO_SLUG
+  - sh .travis/deploy-dockerhub.sh
+  - echo
+  - echo "Heroku deploying..."
+  - echo
+  - test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy-heroku.sh
